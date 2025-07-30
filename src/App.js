@@ -15,6 +15,7 @@ import ClueList from "./components/ClueList";
 import GuessInput from "./components/GuessInput";
 import HintBox from "./components/HintBox";
 import ResultBox from "./components/ResultBox";
+import Onboarding from "./components/Onboarding";
 
 const theme = extendTheme({
   config: {
@@ -34,6 +35,14 @@ function App() {
   const [streak, setStreak] = useState(0);
   const [solved, setSolved] = useState(false);
   const [word, setWord] = useState("");
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasSeen = localStorage.getItem("hasSeenOnboarding");
+    if (!hasSeen) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   useEffect(() => {
     const state = loadGameState();
@@ -56,6 +65,11 @@ function App() {
       solved,
     });
   }, [guesses, clueRevealed, hintCount, streak, solved, today]);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem("hasSeenOnboarding", "true");
+    setShowOnboarding(false);
+  };
 
   const handleGuess = async (word) => {
     setWord("");
@@ -136,24 +150,28 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box maxW="md" mx="auto" mt={10} p={4}>
-        <Text fontSize="3xl" fontWeight="bold" mb={4}>
-          Echo
-        </Text>
-        <ClueList clues={puzzle.clues} revealed={clueRevealed} />
-        <GuessInput onGuess={handleGuess} guess={word} setGuess={setWord} />
-        <HintBox
-          hints={[puzzle.hint1, puzzle.hint2]}
-          revealed={hintCount}
-          onReveal={revealHint}
-        />
-        <ResultBox
-          attempts={guesses.length}
-          hints={hintCount}
-          streak={streak}
-          solved={solved}
-        />
-      </Box>
+      {showOnboarding ? (
+        <Onboarding onComplete={handleOnboardingComplete} />
+      ) : (
+        <Box maxW="md" mx="auto" mt={10} p={4}>
+          <Text fontSize="3xl" fontWeight="bold" mb={4}>
+            Echo
+          </Text>
+          <ClueList clues={puzzle.clues} revealed={clueRevealed} />
+          <GuessInput onGuess={handleGuess} guess={word} setGuess={setWord} />
+          <HintBox
+            hints={[puzzle.hint1, puzzle.hint2]}
+            revealed={hintCount}
+            onReveal={revealHint}
+          />
+          <ResultBox
+            attempts={guesses.length}
+            hints={hintCount}
+            streak={streak}
+            solved={solved}
+          />
+        </Box>
+      )}
     </ChakraProvider>
   );
 }
