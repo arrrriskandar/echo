@@ -1,10 +1,15 @@
-// src/App.js
 import {
   ChakraProvider,
   extendTheme,
   Box,
   Text,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import puzzleBank from "./data/puzzleBank";
@@ -36,6 +41,13 @@ function App() {
   const [solved, setSolved] = useState(false);
   const [word, setWord] = useState("");
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const { isOpen, onOpen } = useDisclosure();
+
+  useEffect(() => {
+    if (solved || guesses.length >= 5) {
+      onOpen();
+    }
+  }, [solved, guesses.length, onOpen]);
 
   useEffect(() => {
     const hasSeen = localStorage.getItem("hasSeenOnboarding");
@@ -71,18 +83,30 @@ function App() {
     setShowOnboarding(false);
   };
 
-  const handleGuess = async (word) => {
+  const handleGuess = async (w) => {
     setWord("");
-    const guess = lemmatize(word.trim().toLowerCase());
-
-    if (!guess || guess.includes(" ")) {
+    if (solved || guesses.length >= 5) {
+      return;
+    }
+    if (!w) {
       toast({
-        title: "Enter a single word only.",
+        title: "Please enter a word.",
         status: "warning",
         duration: 2000,
       });
       return;
     }
+
+    if (w.includes(" ")) {
+      toast({
+        title: "Please enter a single word only.",
+        status: "warning",
+        duration: 2000,
+      });
+      return;
+    }
+
+    const guess = lemmatize(w.trim().toLowerCase());
 
     if (guesses.includes(guess)) {
       toast({
@@ -164,12 +188,21 @@ function App() {
             revealed={hintCount}
             onReveal={revealHint}
           />
-          <ResultBox
-            attempts={guesses.length}
-            hints={hintCount}
-            streak={streak}
-            solved={solved}
-          />
+          <Modal isOpen={isOpen} isCentered>
+            <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
+            <ModalContent>
+              <ModalHeader>{solved ? "🎉 You Won!" : "Game Over"}</ModalHeader>
+              <ModalBody>
+                <ResultBox
+                  attempts={guesses.length}
+                  hints={hintCount}
+                  streak={streak}
+                  solved={solved}
+                  answer={puzzle.answer}
+                />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
         </Box>
       )}
     </ChakraProvider>
