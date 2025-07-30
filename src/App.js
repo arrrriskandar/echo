@@ -21,6 +21,7 @@ import GuessInput from "./components/GuessInput";
 import HintBox from "./components/HintBox";
 import ResultBox from "./components/ResultBox";
 import Onboarding from "./components/Onboarding";
+import GuessList from "./components/GuessList";
 
 const theme = extendTheme({
   config: {
@@ -42,6 +43,7 @@ function App() {
   const [word, setWord] = useState("");
   const [showOnboarding, setShowOnboarding] = useState(false);
   const { isOpen, onOpen } = useDisclosure();
+  const [wrongGuesses, setWrongGuesses] = useState([]);
 
   useEffect(() => {
     if (solved || guesses.length >= 5) {
@@ -93,6 +95,7 @@ function App() {
         title: "Please enter a word.",
         status: "warning",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -102,6 +105,7 @@ function App() {
         title: "Please enter a single word only.",
         status: "warning",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -113,6 +117,7 @@ function App() {
         title: "You already guessed that.",
         status: "info",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -124,6 +129,7 @@ function App() {
         title: "That's already a revealed clue!",
         status: "info",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -135,6 +141,7 @@ function App() {
         title: `Clue revealed: "${puzzle.clues[clueIndex]}"`,
         status: "success",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -145,6 +152,7 @@ function App() {
         title: `"${guess}" is not a valid word.`,
         status: "error",
         duration: 2000,
+        position: "top",
       });
       return;
     }
@@ -158,13 +166,24 @@ function App() {
         title: "🎉 Correct! You solved it!",
         status: "success",
         duration: 3000,
+        position: "top",
       });
     } else {
       toast({
         title: `"${guess}" is incorrect.`,
         status: "warning",
         duration: 2000,
+        position: "top",
       });
+      setWrongGuesses([...wrongGuesses, guess]);
+
+      // Reveal next clue if available
+      const nextClue = [...Array(puzzle.clues.length).keys()].find(
+        (i) => !clueRevealed.includes(i)
+      );
+      if (nextClue !== undefined) {
+        setClueRevealed([...clueRevealed, nextClue]);
+      }
     }
   };
 
@@ -188,6 +207,7 @@ function App() {
             revealed={hintCount}
             onReveal={revealHint}
           />
+          {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
           <Modal isOpen={isOpen} isCentered>
             <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
             <ModalContent>
