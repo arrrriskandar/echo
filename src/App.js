@@ -202,6 +202,15 @@ function App() {
           </Text>
           <ClueList clues={puzzle.clues} revealed={clueRevealed} />
           <GuessInput onGuess={handleGuess} guess={word} setGuess={setWord} />
+          {guesses.length < 4 ? (
+            <Text mb={2} fontSize="md" color="gray.400">
+              Guess {guesses.length + 1} of 5
+            </Text>
+          ) : (
+            <Text mb={2} fontSize="md" color="red.400" fontWeight="bold">
+              Final guess
+            </Text>
+          )}
           <HintBox
             hints={[puzzle.hint1, puzzle.hint2]}
             revealed={hintCount}
