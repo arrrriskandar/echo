@@ -1,10 +1,10 @@
-import { Box, Heading, Text, Button, VStack } from "@chakra-ui/react";
+import { Box, Text, Button, VStack, Image } from "@chakra-ui/react";
 
 const Onboarding = ({ onComplete }) => {
   return (
     <Box p={8} maxW="md" mx="auto" mt={12} textAlign="center">
       <VStack spacing={4}>
-        <Heading size="lg">Welcome to Echo!</Heading>
+        <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
         <Text>
           Every day, you'll solve a one-word puzzle using clues. You get 5
           guesses and can ask for hints if you're stuck. Your progress is

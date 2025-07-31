@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
+  Image,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import puzzleBank from "./data/puzzleBank";
@@ -199,9 +200,7 @@ function App() {
         <Onboarding onComplete={handleOnboardingComplete} />
       ) : (
         <Box maxW="md" mx="auto" mt={10} p={4}>
-          <Text fontSize="3xl" fontWeight="bold" mb={4}>
-            Echo
-          </Text>
+          <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
           <ClueList clues={puzzle.clues} revealed={clueRevealed} />
           <GuessInput onGuess={handleGuess} guess={word} setGuess={setWord} />
           {guesses.length < 4 ? (
