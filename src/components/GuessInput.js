@@ -10,7 +10,7 @@ const GuessInput = ({ onGuess, guess, setGuess, guesses }) => {
         onKeyDown={(e) => e.key === "Enter" && onGuess(guess)}
       />
       {guesses.length === 4 && (
-        <Text fontSize="sm" color="gray.400">
+        <Text fontSize="sm" color="red.400" fontWeight="bold">
           ⚠️ Final Guess
         </Text>
       )}
