@@ -1,4 +1,5 @@
-import { Text, VStack, Button } from "@chakra-ui/react";
+import { Text, VStack, Button, Box, Image } from "@chakra-ui/react";
+import FallingEffect from "./FallingEffect";
 
 export default function ResultBox({ attempts, hints, streak, solved }) {
   const maxAttempts = 5;
@@ -33,16 +34,21 @@ Play daily at: https://echo-three-silk.vercel.app/`;
   };
 
   return (
-    <VStack spacing={4} align="center" p={4}>
-      <Text fontSize="xl" fontWeight="bold">
-        {header}
-      </Text>
-      <Text fontSize="lg">{emojiGuesses}</Text>
-      <Text>{hintLine}</Text>
-      <Text>{streakLine}</Text>
-      <Button size="sm" onClick={handleShare}>
-        Share Result
-      </Button>
-    </VStack>
+    <Box position="relative" w="100%" h="100%">
+      {solved && <FallingEffect emoji="🎉" />}
+      {!solved && <FallingEffect emoji="💀" />}
+      <VStack spacing={4} align="center" p={4}>
+        <Image src="/EchoResult.png" alt="Echo Logo" height="70px" />
+        <Text fontSize="xl" fontWeight="bold">
+          {header}
+        </Text>
+        <Text fontSize="lg">{emojiGuesses}</Text>
+        <Text>{hintLine}</Text>
+        <Text>{streakLine}</Text>
+        <Button size="sm" onClick={handleShare}>
+          Share Result
+        </Button>
+      </VStack>
+    </Box>
   );
 }

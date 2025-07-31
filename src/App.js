@@ -6,11 +6,9 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalBody,
   useDisclosure,
   Image,
-  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import puzzleBank from "./data/puzzleBank";
@@ -217,11 +215,6 @@ function App() {
           <Modal isOpen={isOpen} isCentered>
             <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
             <ModalContent>
-              <ModalHeader>
-                <Center w="100%">
-                  <Image src="/EchoResult.png" alt="Echo Logo" height="70px" />
-                </Center>
-              </ModalHeader>
               <ModalBody>
                 <ResultBox
                   attempts={guesses.length}
