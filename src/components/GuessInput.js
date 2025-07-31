@@ -1,16 +1,20 @@
-import { Input, Button, HStack } from "@chakra-ui/react";
+import { Input, VStack, Text } from "@chakra-ui/react";
 
-const GuessInput = ({ onGuess, guess, setGuess }) => {
+const GuessInput = ({ onGuess, guess, setGuess, guesses }) => {
   return (
-    <HStack mt={4}>
+    <VStack align="left" mt={2}>
       <Input
-        placeholder="Your guess..."
+        placeholder={`Guess ${guesses.length + 1} of 5`}
         value={guess}
         onChange={(e) => setGuess(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onGuess(guess)}
       />
-      <Button onClick={() => onGuess(guess)}>Guess</Button>
-    </HStack>
+      {guesses.length === 4 && (
+        <Text fontSize="sm" color="gray.400">
+          ⚠️ Final Guess
+        </Text>
+      )}
+    </VStack>
   );
 };
 

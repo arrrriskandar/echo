@@ -2,7 +2,6 @@ import {
   ChakraProvider,
   extendTheme,
   Box,
-  Text,
   useToast,
   Modal,
   ModalOverlay,
@@ -11,6 +10,7 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  Center,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import puzzleBank from "./data/puzzleBank";
@@ -202,33 +202,32 @@ function App() {
         <Box maxW="md" mx="auto" mt={10} p={4}>
           <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
           <ClueList clues={puzzle.clues} revealed={clueRevealed} />
-          <GuessInput onGuess={handleGuess} guess={word} setGuess={setWord} />
-          {guesses.length < 4 ? (
-            <Text mb={2} fontSize="md" color="gray.400">
-              Guess {guesses.length + 1} of 5
-            </Text>
-          ) : (
-            <Text mb={2} fontSize="md" color="red.400" fontWeight="bold">
-              Final guess
-            </Text>
-          )}
+          {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
+          <GuessInput
+            onGuess={handleGuess}
+            guess={word}
+            setGuess={setWord}
+            guesses={guesses}
+          />
           <HintBox
             hints={[puzzle.hint1, puzzle.hint2]}
             revealed={hintCount}
             onReveal={revealHint}
           />
-          {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
           <Modal isOpen={isOpen} isCentered>
             <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
             <ModalContent>
-              <ModalHeader>{solved ? "🎉 You Won!" : "Game Over"}</ModalHeader>
+              <ModalHeader>
+                <Center w="100%">
+                  <Image src="/EchoResult.png" alt="Echo Logo" height="70px" />
+                </Center>
+              </ModalHeader>
               <ModalBody>
                 <ResultBox
                   attempts={guesses.length}
                   hints={hintCount}
                   streak={streak}
                   solved={solved}
-                  answer={puzzle.answer}
                 />
               </ModalBody>
             </ModalContent>
