@@ -66,6 +66,7 @@ function App() {
       setHintCount(state.hintCount);
       setStreak(state.streak);
       setSolved(state.solved);
+      setWrongGuesses(state.wrongGuesses || []);
     }
   }, [today]);
 
@@ -77,8 +78,9 @@ function App() {
       hintCount,
       streak,
       solved,
+      wrongGuesses,
     });
-  }, [guesses, clueRevealed, hintCount, streak, solved, today]);
+  }, [guesses, clueRevealed, hintCount, streak, solved, today, wrongGuesses]);
 
   const handleOnboardingComplete = () => {
     localStorage.setItem("hasSeenOnboarding", "true");
