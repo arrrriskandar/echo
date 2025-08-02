@@ -6,7 +6,3 @@ export const loadGameState = () => {
 export const saveGameState = (state) => {
   localStorage.setItem("echo-state", JSON.stringify(state));
 };
-
-export const clearGameState = () => {
-  localStorage.removeItem("echo-state");
-};
