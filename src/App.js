@@ -98,6 +98,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -108,6 +109,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -120,6 +122,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -132,6 +135,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -144,6 +148,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -155,6 +160,7 @@ function App() {
         duration: 2000,
         position: "top",
       });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -163,19 +169,7 @@ function App() {
     if (guess === lemmatize(puzzle.answer)) {
       setSolved(true);
       setStreak(streak + 1);
-      toast({
-        title: "🎉 Correct! You solved it!",
-        status: "success",
-        duration: 3000,
-        position: "top",
-      });
     } else {
-      toast({
-        title: `"${guess}" is incorrect.`,
-        status: "warning",
-        duration: 2000,
-        position: "top",
-      });
       setWrongGuesses([...wrongGuesses, guess]);
 
       // Reveal next clue if available
