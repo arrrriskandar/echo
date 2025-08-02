@@ -31,7 +31,8 @@ const theme = extendTheme({
 
 function App() {
   const toast = useToast();
-  const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
+  const today = "2025-08-07";
   const puzzle = puzzleBank.find((p) => p.date === today);
 
   const [guesses, setGuesses] = useState([]);
@@ -41,14 +42,20 @@ function App() {
   const [solved, setSolved] = useState(false);
   const [word, setWord] = useState("");
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const { isOpen, onOpen } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [lastSolvedDate, setLastSolvedDate] = useState(null);
 
   useEffect(() => {
     if (solved || guesses.length >= 5) {
+      if (!solved) {
+        setStreak(0);
+      }
       onOpen();
+    } else {
+      onClose(); // close result modal if game is still ongoing
     }
-  }, [solved, guesses.length, onOpen]);
+  }, [solved, guesses.length, onOpen, onClose]);
 
   useEffect(() => {
     const hasSeen = localStorage.getItem("hasSeenOnboarding");
@@ -59,13 +66,37 @@ function App() {
 
   useEffect(() => {
     const state = loadGameState();
+
     if (state && state.date === today) {
+      // same day, load everything
       setGuesses(state.guesses);
       setClueRevealed(state.clueRevealed);
       setHintCount(state.hintCount);
       setStreak(state.streak);
       setSolved(state.solved);
       setWrongGuesses(state.wrongGuesses || []);
+      setLastSolvedDate(state.lastSolvedDate || null);
+    } else {
+      // new day — evaluate streak
+      let newStreak = 0;
+
+      if (state?.solved && state?.lastSolvedDate) {
+        const last = new Date(state.lastSolvedDate);
+        const current = new Date(today);
+        const diff = (current - last) / (1000 * 60 * 60 * 24);
+
+        if (diff === 1) {
+          newStreak = state.streak; // continue streak
+        }
+      }
+
+      setStreak(newStreak);
+      setGuesses([]);
+      setClueRevealed([0]);
+      setHintCount(0);
+      setSolved(false);
+      setWrongGuesses([]);
+      setLastSolvedDate(null);
     }
   }, [today]);
 
@@ -78,8 +109,18 @@ function App() {
       streak,
       solved,
       wrongGuesses,
+      lastSolvedDate,
     });
-  }, [guesses, clueRevealed, hintCount, streak, solved, today, wrongGuesses]);
+  }, [
+    guesses,
+    clueRevealed,
+    hintCount,
+    streak,
+    solved,
+    today,
+    wrongGuesses,
+    lastSolvedDate,
+  ]);
 
   const handleOnboardingComplete = () => {
     localStorage.setItem("hasSeenOnboarding", "true");
@@ -169,7 +210,15 @@ function App() {
     if (guess === lemmatize(puzzle.answer)) {
       setSolved(true);
       setStreak(streak + 1);
+      setLastSolvedDate(today);
     } else {
+      toast({
+        title: `"${guess}" is incorrect.`,
+        status: "warning",
+        duration: 2000,
+        position: "top",
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setWrongGuesses([...wrongGuesses, guess]);
 
       // Reveal next clue if available
