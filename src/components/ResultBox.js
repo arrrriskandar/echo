@@ -1,7 +1,13 @@
 import { Text, VStack, Button, Box, Image } from "@chakra-ui/react";
-import FallingEffect from "./FallingEffect";
+import { useEffect, useState } from "react";
 
-export default function ResultBox({ attempts, hints, streak, solved }) {
+export default function ResultBox({
+  attempts,
+  hints,
+  streak,
+  solved,
+  onCountdownComplete,
+}) {
   const maxAttempts = 5;
 
   // Build an array of length maxAttempts with emojis:
@@ -17,6 +23,7 @@ export default function ResultBox({ attempts, hints, streak, solved }) {
   const header = solved ? "🎉 You Won!" : "💀 Game Over";
   const hintLine = `💡 Hints used: ${hints}`;
   const streakLine = `🔥 Streak: ${streak}`;
+  const [countdown, setCountdown] = useState("");
 
   const shareText = `Echo 
 ${emojiGuesses}
@@ -33,10 +40,39 @@ Play daily at: https://echo-three-silk.vercel.app/`;
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const nextMidnight = new Date();
+      nextMidnight.setHours(24, 0, 0, 0);
+      // const nextMidnight = new Date(now.getTime() + 10000);
+
+      const diff = nextMidnight - now;
+
+      if (diff <= 0) {
+        clearInterval(interval);
+        setCountdown("00:00:00");
+        if (onCountdownComplete) onCountdownComplete(); // trigger reset
+        return;
+      }
+
+      const hours = String(Math.floor(diff / 3600000)).padStart(2, "0");
+      const minutes = String(Math.floor((diff % 3600000) / 60000)).padStart(
+        2,
+        "0"
+      );
+      const seconds = String(Math.floor((diff % 60000) / 1000)).padStart(
+        2,
+        "0"
+      );
+
+      setCountdown(`${hours}:${minutes}:${seconds}`);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [onCountdownComplete]);
+
   return (
     <Box position="relative" w="100%" h="100%">
-      {solved && <FallingEffect emoji="🎉" />}
-      {!solved && <FallingEffect emoji="💀" />}
       <VStack spacing={4} align="center" p={4}>
         <Image src="/EchoResult.png" alt="Echo Logo" height="70px" />
         <Text fontSize="xl" fontWeight="bold">
@@ -48,6 +84,9 @@ Play daily at: https://echo-three-silk.vercel.app/`;
         <Button size="sm" onClick={handleShare}>
           Share Result
         </Button>
+        <Text fontSize="sm" color="gray.400">
+          ⏳ Next puzzle in: {countdown}
+        </Text>
       </VStack>
     </Box>
   );
