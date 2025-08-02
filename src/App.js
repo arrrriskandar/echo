@@ -31,8 +31,7 @@ const theme = extendTheme({
 
 function App() {
   const toast = useToast();
-  // const today = new Date().toISOString().split("T")[0];
-  const today = "2025-08-02";
+  const today = new Date().toISOString().split("T")[0];
   const puzzle = puzzleBank.find((p) => p.date === today);
 
   const [guesses, setGuesses] = useState([]);

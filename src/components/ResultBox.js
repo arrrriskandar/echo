@@ -43,11 +43,18 @@ Play daily at: https://echo-three-silk.vercel.app/`;
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      const nextMidnight = new Date();
-      nextMidnight.setHours(24, 0, 0, 0);
-      // const nextMidnight = new Date(now.getTime() + 10000);
+      const nextUtcMidnight = new Date(
+        Date.UTC(
+          now.getUTCFullYear(),
+          now.getUTCMonth(),
+          now.getUTCDate() + 1, // next UTC day
+          0,
+          0,
+          0
+        )
+      );
 
-      const diff = nextMidnight - now;
+      const diff = nextUtcMidnight - now;
 
       if (diff <= 0) {
         clearInterval(interval);
