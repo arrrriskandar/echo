@@ -9,6 +9,7 @@ import {
   ModalBody,
   useDisclosure,
   Image,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import puzzleBank from "./data/puzzleBank";
@@ -21,6 +22,7 @@ import HintBox from "./components/HintBox";
 import ResultBox from "./components/ResultBox";
 import Onboarding from "./components/Onboarding";
 import GuessList from "./components/GuessList";
+import { QuestionIcon } from "@chakra-ui/icons";
 
 const theme = extendTheme({
   config: {
@@ -240,6 +242,16 @@ function App() {
         <Onboarding onComplete={handleOnboardingComplete} />
       ) : (
         <Box maxW="md" mx="auto" mt={10} p={4}>
+          <IconButton
+            icon={<QuestionIcon />}
+            aria-label="Help"
+            onClick={() => setShowOnboarding(true)}
+            position="absolute"
+            top="0px"
+            right="0px"
+            color="blue.500"
+            variant="ghost"
+          />
           <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
           <ClueList clues={puzzle.clues} revealed={clueRevealed} />
           {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
