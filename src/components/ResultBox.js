@@ -29,7 +29,7 @@ export default function ResultBox({
 ${emojiGuesses}
 ${hintLine}
 ${streakLine} 
-Play daily at: https://echo-three-silk.vercel.app/`;
+Play daily at: www.dailyechogame.com`;
 
   const handleShare = async () => {
     try {
@@ -93,6 +93,9 @@ Play daily at: https://echo-three-silk.vercel.app/`;
         </Button>
         <Text fontSize="sm" color="gray.400">
           ⏳ Next puzzle in: {countdown}
+        </Text>
+        <Text fontSize="xs" color="gray.500" mt={2} userSelect="text">
+          Play daily at: www.dailyechogame.com
         </Text>
       </VStack>
     </Box>
