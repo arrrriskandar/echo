@@ -268,6 +268,7 @@ function App() {
                   onCountdownComplete={() => {
                     window.location.reload();
                   }}
+                  answer={puzzle.answer}
                 />
               </ModalBody>
             </ModalContent>
