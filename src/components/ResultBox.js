@@ -92,7 +92,7 @@ Play daily at: www.dailyechogame.com`;
   return (
     <Box position="relative" w="100%" h="100%">
       <VStack spacing={4} align="center" p={4}>
-        <Image src="/EchoResult.png" alt="Echo Logo" height="70px" />
+        <Image src="/EchoModal.png" alt="Echo Logo" height="70px" />
         {showAnswer ? (
           <Fade in={showAnswer}>
             <Box p={2} bg="gray.700" borderRadius="md">

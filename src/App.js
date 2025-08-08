@@ -21,7 +21,13 @@ import HintBox from "./components/HintBox";
 import ResultBox from "./components/ResultBox";
 import Onboarding from "./components/Onboarding";
 import GuessList from "./components/GuessList";
-import HelpButton from "./components/HelpButton";
+import SideMenu from "./components/SideMenu";
+import About from "./components/About";
+import Instructions from "./components/Instructions";
+import Contact from "./components/Contact";
+import Support from "./components/Support";
+import Privacy from "./components/Privacy";
+import SideMenuContentModal from "./components/SideMenuContentModal";
 
 const theme = extendTheme({
   config: {
@@ -45,6 +51,23 @@ function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [lastSolvedDate, setLastSolvedDate] = useState(null);
+  const [activeModal, setActiveModal] = useState(null);
+
+  const handleSelect = (modalKey) => {
+    setActiveModal(modalKey);
+  };
+
+  const handleClose = () => {
+    setActiveModal(null);
+  };
+
+  const contentMap = {
+    about: <About />,
+    instructions: <Instructions />,
+    contact: <Contact />,
+    privacy: <Privacy />,
+    support: <Support />,
+  };
 
   useEffect(() => {
     if (solved || guesses.length >= 5) {
@@ -241,7 +264,13 @@ function App() {
         <Onboarding onComplete={handleOnboardingComplete} />
       ) : (
         <Box maxW="md" mx="auto" mt={10} p={4}>
-          <HelpButton onClick={() => setShowOnboarding(true)} />
+          <SideMenu onSelect={handleSelect} />
+          <SideMenuContentModal
+            isOpen={activeModal !== null}
+            onClose={handleClose}
+          >
+            {activeModal && contentMap[activeModal]}
+          </SideMenuContentModal>
           <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
           <ClueList clues={puzzle.clues} revealed={clueRevealed} />
           {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
