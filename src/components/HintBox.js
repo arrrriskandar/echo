@@ -9,7 +9,8 @@ const HintBox = ({ hints, revealed, onReveal }) => {
       {revealed > 1 && <Text>💡 Hint 2: {hints[1]}</Text>}
       <VStack align="center" mt={4}>
         <Button onClick={onReveal} isDisabled={revealed >= maxHints}>
-          {revealed < maxHints ? "Show Hint (with Ad)" : "No More Hints"}
+          {/* {revealed < maxHints ? "Show Hint (with Ad)" : "No More Hints"} */}
+          {revealed < maxHints ? "Show Hint" : "No More Hints"}
         </Button>
         <Text fontSize="sm" color="gray.400">
           {revealed}/{maxHints} hints used

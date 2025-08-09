@@ -25,10 +25,15 @@ const Onboarding = ({ onComplete }) => {
             Clues are shown from <strong>obvious to subtle</strong> — use them
             to guide your thinking.
           </ListItem>
-          <ListItem>
+          {/* <ListItem>
             <ListIcon as={CheckCircleIcon} color="teal.500" />
             You can unlock <strong>2 hints</strong> — triggered by watching an
             ad.
+          </ListItem> */}
+          <ListItem>
+            <ListIcon as={CheckCircleIcon} color="teal.500" />
+            You can use up to <strong>2 hints</strong> if you require additional
+            help.
           </ListItem>
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="teal.500" />

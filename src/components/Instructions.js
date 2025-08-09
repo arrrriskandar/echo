@@ -19,7 +19,7 @@ const Instructions = () => {
           </ListItem>
           <ListItem>
             You can reveal up to 2 hints to help you get closer to the answer.
-            Hints are triggered by watching ads.
+            {/* Hints are triggered by watching ads. */}
           </ListItem>
           <ListItem>
             Try to guess correctly to keep your winning streak alive!

@@ -8,10 +8,10 @@ const PrivacyPolicy = () => {
           Privacy Policy
         </Text>
         <Text>
-          Your privacy is important to me. Echo is a front-end only application
-          that does not collect or store any personal data.
+          Your privacy is important to me. Echo does not collect or store any
+          personal data.
         </Text>
-        <Text>
+        {/* <Text>
           However, to support the app and keep it free, I use Google AdSense for
           displaying ads. Google may collect certain anonymous information such
           as cookies and device identifiers to personalize ads. For more
@@ -24,7 +24,7 @@ const PrivacyPolicy = () => {
             Google Privacy Policy
           </Link>
           .
-        </Text>
+        </Text> */}
         <Text>
           If you have any questions about this privacy policy or your data,
           please feel free to contact me at{" "}
