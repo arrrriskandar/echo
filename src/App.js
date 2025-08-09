@@ -155,7 +155,8 @@ function App() {
     if (solved || guesses.length >= 5) {
       return;
     }
-    if (!w) {
+    const word = w.trim().toLowerCase();
+    if (!word) {
       toast({
         title: "Please enter a word.",
         status: "warning",
@@ -166,7 +167,7 @@ function App() {
       return;
     }
 
-    if (w.includes(" ")) {
+    if (word.includes(" ")) {
       toast({
         title: "Please enter a single word only.",
         status: "warning",
@@ -177,7 +178,7 @@ function App() {
       return;
     }
 
-    const guess = lemmatize(w.trim().toLowerCase());
+    const guess = lemmatize(word);
 
     if (guesses.includes(guess)) {
       toast({
