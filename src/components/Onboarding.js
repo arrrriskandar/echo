@@ -40,16 +40,28 @@ const Onboarding = ({ onComplete }) => {
             Guessing a clue doesn't count against your 5 attempts.
           </ListItem>
           <ListItem>
-            <ListIcon as={InfoIcon} color="blue.500" />A new puzzle appears
-            daily at <strong>00:00 UTC</strong>.
+            <ListIcon as={InfoIcon} color="blue.500" />
+            Puzzles release daily at 00:00 UTC (
+            {new Date(
+              Date.UTC(
+                new Date().getUTCFullYear(),
+                new Date().getUTCMonth(),
+                new Date().getUTCDate()
+              )
+            ).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}{" "}
+            in your local time)
           </ListItem>
         </List>
 
-        <Text fontSize="sm" color="gray.500">
+        <Text fontSize="sm" color="gray.300">
           Your streak is tracked — play daily to keep it alive!
         </Text>
 
-        <Button colorScheme="teal" size="md" onClick={onComplete}>
+        <Button size="md" onClick={onComplete}>
           Got it! Let’s play 🎯
         </Button>
       </VStack>

@@ -3,11 +3,6 @@ import {
   extendTheme,
   Box,
   useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  useDisclosure,
   Image,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -48,10 +43,10 @@ function App() {
   const [solved, setSolved] = useState(false);
   const [word, setWord] = useState("");
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [lastSolvedDate, setLastSolvedDate] = useState(null);
   const [activeModal, setActiveModal] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
 
   const handleSelect = (modalKey) => {
     setActiveModal(modalKey);
@@ -74,11 +69,9 @@ function App() {
       if (!solved) {
         setStreak(0);
       }
-      onOpen();
-    } else {
-      onClose();
+      setGameOver(true);
     }
-  }, [solved, guesses.length, onOpen, onClose]);
+  }, [solved, guesses.length]);
 
   useEffect(() => {
     const hasSeen = localStorage.getItem("hasSeenOnboarding");
@@ -160,7 +153,7 @@ function App() {
       toast({
         title: "Please enter a word.",
         status: "warning",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -171,7 +164,7 @@ function App() {
       toast({
         title: "Please enter a single word only.",
         status: "warning",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -184,7 +177,7 @@ function App() {
       toast({
         title: "You already guessed that.",
         status: "info",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -197,7 +190,7 @@ function App() {
       toast({
         title: "That's already a revealed clue!",
         status: "info",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -210,7 +203,7 @@ function App() {
       toast({
         title: `Clue revealed: "${puzzle.clues[clueIndex]}"`,
         status: "success",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -222,24 +215,38 @@ function App() {
       toast({
         title: `"${guess}" is not a valid word.`,
         status: "error",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-
-    setGuesses([...guesses, guess]);
+    const nextGuesses = [...guesses, guess];
+    setGuesses(nextGuesses);
 
     if (guess === lemmatize(puzzle.answer)) {
       setSolved(true);
       setStreak(streak + 1);
       setLastSolvedDate(today);
+      toast({
+        title: "🎉 Correct! You solved it!",
+        status: "success",
+        duration: 3000,
+        position: "top",
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
+      const remaining = 5 - nextGuesses.length;
+      const guessWord = remaining === 1 ? "guess" : "guesses";
+
       toast({
         title: `"${guess}" is incorrect.`,
+        description:
+          nextGuesses.length >= 5
+            ? `You failed to solve today's puzzle. The answer was "${puzzle.answer}".`
+            : `Try again! You have ${remaining} ${guessWord} left.`,
         status: "warning",
-        duration: 2000,
+        duration: 3000,
         position: "top",
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -273,36 +280,35 @@ function App() {
             {activeModal && contentMap[activeModal]}
           </SideMenuContentModal>
           <Image src="/EchoBig.png" alt="Echo Logo" boxSize="100px" mx="auto" />
-          <ClueList clues={puzzle.clues} revealed={clueRevealed} />
-          {wrongGuesses.length > 0 && <GuessList wrongGuesses={wrongGuesses} />}
-          <GuessInput
-            onGuess={handleGuess}
-            guess={word}
-            setGuess={setWord}
-            guesses={guesses}
-          />
-          <HintBox
-            hints={[puzzle.hint1, puzzle.hint2]}
-            revealed={hintCount}
-            onReveal={revealHint}
-          />
-          <Modal isOpen={isOpen} isCentered>
-            <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
-            <ModalContent>
-              <ModalBody>
-                <ResultBox
-                  attempts={guesses.length}
-                  hints={hintCount}
-                  streak={streak}
-                  solved={solved}
-                  onCountdownComplete={() => {
-                    window.location.reload();
-                  }}
-                  answer={puzzle.answer}
-                />
-              </ModalBody>
-            </ModalContent>
-          </Modal>
+          {!gameOver ? (
+            <>
+              <ClueList clues={puzzle.clues} revealed={clueRevealed} />
+              {wrongGuesses.length > 0 && (
+                <GuessList wrongGuesses={wrongGuesses} />
+              )}
+              <GuessInput
+                onGuess={handleGuess}
+                guess={word}
+                setGuess={setWord}
+                guesses={guesses}
+              />
+              <HintBox
+                hints={[puzzle.hint1, puzzle.hint2]}
+                revealed={hintCount}
+                onReveal={revealHint}
+              />
+            </>
+          ) : (
+            <ResultBox
+              attempts={guesses.length}
+              hints={hintCount}
+              streak={streak}
+              solved={solved}
+              onCountdownComplete={() => {
+                window.location.reload();
+              }}
+            />
+          )}
         </Box>
       )}
     </ChakraProvider>

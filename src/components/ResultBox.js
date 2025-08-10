@@ -1,4 +1,4 @@
-import { Text, VStack, Button, Box, Image, Fade } from "@chakra-ui/react";
+import { Text, VStack, Button, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function ResultBox({
@@ -7,10 +7,8 @@ export default function ResultBox({
   streak,
   solved,
   onCountdownComplete,
-  answer,
 }) {
   const maxAttempts = 5;
-  const [showAnswer, setShowAnswer] = useState(!solved);
 
   // Build an array of length maxAttempts with emojis:
   // For solved: attempts number of ✅, rest ⚪️
@@ -80,36 +78,14 @@ Play daily at: www.dailyechogame.com`;
     return () => clearInterval(interval);
   }, [onCountdownComplete]);
 
-  useEffect(() => {
-    if (!solved) {
-      const timer = setTimeout(() => {
-        setShowAnswer(false);
-      }, 2000); // hide after 2 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [solved]);
-
   return (
     <Box position="relative" w="100%" h="100%">
       <VStack spacing={4} align="center" p={4}>
-        <Image src="/EchoModal.png" alt="Echo Logo" height="70px" />
-        {showAnswer ? (
-          <Fade in={showAnswer}>
-            <Box p={2} bg="gray.700" borderRadius="md">
-              <Text color="red.300" fontWeight="bold">
-                Correct answer was: {answer}
-              </Text>
-            </Box>
-          </Fade>
-        ) : (
-          <Fade in={!showAnswer}>
-            <Box p={2} bg="gray.700" borderRadius="md">
-              <Text fontSize="xl" fontWeight="bold">
-                {header}
-              </Text>
-            </Box>
-          </Fade>
-        )}
+        <Box p={2} borderRadius="md">
+          <Text fontSize="xl" fontWeight="bold">
+            {header}
+          </Text>
+        </Box>
         <Text fontSize="lg">{emojiGuesses}</Text>
         <Text>{hintLine}</Text>
         <Text>{streakLine}</Text>

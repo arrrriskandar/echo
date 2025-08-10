@@ -9,7 +9,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-const SideMenuContentModal = ({ isOpen, onClose, title, children }) => {
+const SideMenuContentModal = ({ isOpen, onClose, children }) => {
   return (
     <Modal
       isOpen={isOpen}
