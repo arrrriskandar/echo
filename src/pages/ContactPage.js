@@ -1,6 +1,6 @@
 import { Box, Text, VStack, Link } from "@chakra-ui/react";
 
-const Contact = () => {
+const ContactPage = () => {
   return (
     <Box p={4} pt={0}>
       <VStack spacing={4} align="start">
@@ -24,4 +24,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactPage;

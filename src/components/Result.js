@@ -1,13 +1,13 @@
 import { Text, VStack, Button, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-export default function ResultBox({
+const Result = ({
   attempts,
   hints,
-  streak,
   solved,
   onCountdownComplete,
-}) {
+  streakCount,
+}) => {
   const maxAttempts = 5;
 
   // Build an array of length maxAttempts with emojis:
@@ -22,7 +22,7 @@ export default function ResultBox({
 
   const header = solved ? "🎉 You Won!" : "💀 Game Over";
   const hintLine = `💡 Hints used: ${hints}`;
-  const streakLine = `🔥 Streak: ${streak}`;
+  const streakLine = `🔥 Streak: ${streakCount}`;
   const [countdown, setCountdown] = useState("");
 
   const shareText = `Echo 
@@ -56,10 +56,12 @@ Play daily at: www.dailyechogame.com`;
 
       const diff = nextUtcMidnight - now;
 
-      if (diff <= 0) {
+      if (diff < 1000) {
         clearInterval(interval);
         setCountdown("00:00:00");
-        if (onCountdownComplete) onCountdownComplete(); // trigger reset
+        setTimeout(() => {
+          if (onCountdownComplete) onCountdownComplete();
+        }, 1000);
         return;
       }
 
@@ -101,4 +103,6 @@ Play daily at: www.dailyechogame.com`;
       </VStack>
     </Box>
   );
-}
+};
+
+export default Result;

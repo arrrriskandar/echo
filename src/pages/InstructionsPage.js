@@ -1,6 +1,6 @@
 import { Box, Text, VStack, UnorderedList, ListItem } from "@chakra-ui/react";
 
-const Instructions = () => {
+const InstructionsPage = () => {
   return (
     <Box p={4} pt={0}>
       <VStack spacing={4} align="start">
@@ -33,4 +33,4 @@ const Instructions = () => {
   );
 };
 
-export default Instructions;
+export default InstructionsPage;

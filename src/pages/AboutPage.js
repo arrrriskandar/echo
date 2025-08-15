@@ -1,6 +1,6 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
 
-const About = () => {
+const AboutPage = () => {
   return (
     <Box p={4} pt={0}>
       <VStack spacing={4} align="start">
@@ -22,4 +22,4 @@ const About = () => {
     </Box>
   );
 };
-export default About;
+export default AboutPage;

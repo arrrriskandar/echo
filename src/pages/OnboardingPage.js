@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { InfoIcon, CheckCircleIcon } from "@chakra-ui/icons";
 
-const Onboarding = ({ onComplete }) => {
+const OnboardingPage = ({ onComplete }) => {
   return (
     <Box p={8} maxW="lg" mx="auto" mt={12} textAlign="center">
       <VStack spacing={6}>
@@ -69,4 +69,4 @@ const Onboarding = ({ onComplete }) => {
   );
 };
 
-export default Onboarding;
+export default OnboardingPage;

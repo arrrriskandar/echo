@@ -12,14 +12,50 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const SideMenu = ({ onSelect }) => {
+const SideMenu = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSelect = (key) => {
-    onSelect(key);
+  const handleNavigate = (path) => {
+    navigate(path);
     onClose();
   };
+
+  const menuItems = [
+    {
+      path: "/",
+      label: "Home",
+      description: "Play or view result",
+    },
+    {
+      path: "/about",
+      label: "About",
+      description: "Learn more about Echo",
+    },
+    {
+      path: "/instructions",
+      label: "Instructions",
+      description: "How to play the game",
+    },
+    {
+      path: "/contact",
+      label: "Contact",
+      description: "Get in touch with us",
+    },
+    {
+      path: "/privacy",
+      label: "Privacy Policy",
+      description: "Privacy and data use",
+    },
+    {
+      path: "/support",
+      label: "Support Me",
+      description: "Buy me a coffee ☕️",
+    },
+  ];
 
   return (
     <>
@@ -42,71 +78,26 @@ const SideMenu = ({ onSelect }) => {
 
           <DrawerBody>
             <VStack spacing={4} align="stretch">
-              <Box
-                as="button"
-                onClick={() => handleSelect("about")}
-                padding="10px"
-                borderRadius="md"
-                _hover={{ bg: "#5170ff" }}
-                textAlign="left"
-              >
-                <Text fontWeight="bold">About</Text>
-                <Text fontSize="sm" color="gray.400">
-                  Learn more about Echo
-                </Text>
-              </Box>
-              <Box
-                as="button"
-                onClick={() => handleSelect("instructions")}
-                padding="10px"
-                borderRadius="md"
-                _hover={{ bg: "#5170ff" }}
-                textAlign="left"
-              >
-                <Text fontWeight="bold">Instructions</Text>
-                <Text fontSize="sm" color="gray.400">
-                  How to play the game
-                </Text>
-              </Box>
-              <Box
-                as="button"
-                onClick={() => handleSelect("contact")}
-                padding="10px"
-                borderRadius="md"
-                _hover={{ bg: "#5170ff" }}
-                textAlign="left"
-              >
-                <Text fontWeight="bold">Contact</Text>
-                <Text fontSize="sm" color="gray.400">
-                  Get in touch with us
-                </Text>
-              </Box>
-              <Box
-                as="button"
-                onClick={() => handleSelect("privacy")}
-                padding="10px"
-                borderRadius="md"
-                _hover={{ bg: "#5170ff" }}
-                textAlign="left"
-              >
-                <Text fontWeight="bold">Privacy Policy</Text>
-                <Text fontSize="sm" color="gray.400">
-                  Privacy and data use
-                </Text>
-              </Box>
-              <Box
-                as="button"
-                onClick={() => handleSelect("support")}
-                padding="10px"
-                borderRadius="md"
-                _hover={{ bg: "#5170ff" }}
-                textAlign="left"
-              >
-                <Text fontWeight="bold">Support Me</Text>
-                <Text fontSize="sm" color="gray.400">
-                  Buy me a coffee ☕️
-                </Text>
-              </Box>
+              {menuItems.map(({ path, label, description }) => {
+                const isActive = location.pathname === path;
+                return (
+                  <Box
+                    key={path}
+                    as="button"
+                    onClick={() => handleNavigate(path)}
+                    padding="10px"
+                    borderRadius="md"
+                    _hover={{ bg: "#5170ff" }}
+                    bg={isActive ? "#5170ff" : "transparent"}
+                    textAlign="left"
+                  >
+                    <Text fontWeight="bold">{label}</Text>
+                    <Text fontSize="sm" color="gray.400">
+                      {description}
+                    </Text>
+                  </Box>
+                );
+              })}
             </VStack>
           </DrawerBody>
         </DrawerContent>
