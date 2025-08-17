@@ -35,6 +35,7 @@ const HomePage = () => {
       duration: 3000,
       position: "top",
     });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return !gameOver ? (
