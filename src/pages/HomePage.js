@@ -4,6 +4,8 @@ import { useGame } from "../context/GameContext";
 
 import Result from "../components/Result";
 import Game from "../components/Game";
+import dayCounter from "../utils/dayCounter";
+import Header from "../components/PuzzleNumberHeader";
 
 const HomePage = () => {
   const {
@@ -22,6 +24,7 @@ const HomePage = () => {
 
   const toast = useToast();
   const [word, setWord] = useState("");
+  const puzzleNumber = dayCounter();
 
   const onGuess = async (input) => {
     const result = await handleGuess(input);
@@ -38,26 +41,31 @@ const HomePage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return !gameOver ? (
-    <Game
-      puzzle={puzzle}
-      wrongGuesses={wrongGuesses}
-      onGuess={onGuess}
-      word={word}
-      clueRevealed={clueRevealed}
-      setWord={setWord}
-      guesses={guesses}
-      hintCount={hintCount}
-      revealHint={revealHint}
-    />
-  ) : (
-    <Result
-      attempts={guesses.length}
-      hints={hintCount}
-      solved={solved}
-      streakCount={streakCount}
-      onCountdownComplete={resetGameState}
-    />
+  return (
+    <>
+      <Header puzzleNumber={puzzleNumber} />
+      {!gameOver ? (
+        <Game
+          puzzle={puzzle}
+          wrongGuesses={wrongGuesses}
+          onGuess={onGuess}
+          word={word}
+          clueRevealed={clueRevealed}
+          setWord={setWord}
+          guesses={guesses}
+          hintCount={hintCount}
+          revealHint={revealHint}
+        />
+      ) : (
+        <Result
+          attempts={guesses.length}
+          hints={hintCount}
+          solved={solved}
+          streakCount={streakCount}
+          onCountdownComplete={resetGameState}
+        />
+      )}
+    </>
   );
 };
 
