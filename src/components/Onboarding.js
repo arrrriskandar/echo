@@ -3,18 +3,16 @@ import {
   Text,
   Button,
   VStack,
-  Image,
   List,
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
 import { InfoIcon, CheckCircleIcon } from "@chakra-ui/icons";
 
-const OnboardingPage = ({ onComplete }) => {
+const Onboarding = ({ onComplete }) => {
   return (
     <Box p={8} maxW="lg" mx="auto" mt={12} textAlign="center">
       <VStack spacing={6}>
-        <Image src="/EchoBig.png" alt="Echo Logo" boxSize="120px" mx="auto" />
         <List spacing={3} textAlign="left">
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="teal.500" />
@@ -69,4 +67,4 @@ const OnboardingPage = ({ onComplete }) => {
   );
 };
 
-export default OnboardingPage;
+export default Onboarding;

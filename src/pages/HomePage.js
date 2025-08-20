@@ -1,11 +1,13 @@
 import { useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGame } from "../context/GameContext";
 
 import Result from "../components/Result";
 import Game from "../components/Game";
 import dayCounter from "../utils/dayCounter";
 import Header from "../components/PuzzleNumberHeader";
+import { saveOnboardingState } from "../utils/storage";
+import Onboarding from "../components/Onboarding";
 
 const HomePage = () => {
   const {
@@ -25,6 +27,12 @@ const HomePage = () => {
   const toast = useToast();
   const [word, setWord] = useState("");
   const puzzleNumber = dayCounter();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasSeen = localStorage.getItem("hasSeenOnboarding");
+    if (!hasSeen) setShowOnboarding(true);
+  }, []);
 
   const onGuess = async (input) => {
     const result = await handleGuess(input);
@@ -41,7 +49,14 @@ const HomePage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  return (
+  const handleOnboardingComplete = () => {
+    saveOnboardingState();
+    setShowOnboarding(false);
+  };
+
+  return showOnboarding ? (
+    <Onboarding onComplete={handleOnboardingComplete} />
+  ) : (
     <>
       <Header puzzleNumber={puzzleNumber} />
       {!gameOver ? (
