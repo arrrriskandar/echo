@@ -17,9 +17,23 @@ import { saveOnboardingState } from "./utils/storage";
 
 const App = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Detect bot on initial load
   useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const botKeywords = [
+      "googlebot",
+      "bingbot",
+      "yandex",
+      "duckduckbot",
+      "baiduspider",
+      "slurp",
+      "adsbot-google",
+    ];
+    const botDetected = botKeywords.some((bot) => userAgent.includes(bot));
+
     const hasSeen = localStorage.getItem("hasSeenOnboarding");
-    if (!hasSeen) {
+    if (!hasSeen && !botDetected) {
       setShowOnboarding(true);
     }
   }, []);
@@ -28,6 +42,7 @@ const App = () => {
     saveOnboardingState();
     setShowOnboarding(false);
   };
+
   return (
     <Router>
       {showOnboarding ? (
@@ -35,7 +50,7 @@ const App = () => {
       ) : (
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route Route index element={<HomePage />} />
+            <Route index element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/instructions" element={<InstructionsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
