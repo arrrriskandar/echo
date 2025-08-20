@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   ListIcon,
+  Image,
 } from "@chakra-ui/react";
 import { InfoIcon, CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -13,6 +14,13 @@ const Onboarding = ({ onComplete }) => {
   return (
     <Box p={8} maxW="lg" mx="auto" mt={12} textAlign="center">
       <VStack spacing={6}>
+        <Image
+          src="/EchoBig.png"
+          alt="Echo Logo"
+          boxSize="100px"
+          mx="auto"
+          mb={6}
+        />
         <List spacing={3} textAlign="left">
           <ListItem>
             <ListIcon as={CheckCircleIcon} color="teal.500" />

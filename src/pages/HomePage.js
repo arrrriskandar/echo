@@ -8,6 +8,13 @@ import dayCounter from "../utils/dayCounter";
 import Header from "../components/PuzzleNumberHeader";
 import { saveOnboardingState } from "../utils/storage";
 import Onboarding from "../components/Onboarding";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 
 const HomePage = () => {
   const {
@@ -54,9 +61,7 @@ const HomePage = () => {
     setShowOnboarding(false);
   };
 
-  return showOnboarding ? (
-    <Onboarding onComplete={handleOnboardingComplete} />
-  ) : (
+  return (
     <>
       <Header puzzleNumber={puzzleNumber} />
       {!gameOver ? (
@@ -80,6 +85,20 @@ const HomePage = () => {
           onCountdownComplete={resetGameState}
         />
       )}
+      <Modal
+        isOpen={showOnboarding}
+        onClose={handleOnboardingComplete}
+        isCentered
+        closeOnOverlayClick={false}
+      >
+        <ModalOverlay />
+        <ModalContent bg="gray.800">
+          <ModalCloseButton />
+          <ModalBody>
+            <Onboarding onComplete={handleOnboardingComplete} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
