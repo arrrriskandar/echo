@@ -146,7 +146,7 @@ const puzzleBank = [
   {
     date: "2025-08-24",
     answer: "raincoat",
-    clues: ["rain", "waterproof", "coat", "storm"],
+    clues: ["umbrella", "waterproof", "yellow", "drizzle"],
     hint1: "8 letters",
     hint2: "Protects from rain",
   },
