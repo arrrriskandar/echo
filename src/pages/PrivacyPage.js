@@ -8,8 +8,8 @@ const PrivacyPolicy = () => {
           Privacy Policy
         </Text>
         <Text>
-          Your privacy is important to me. Echo does not collect or store any
-          personal data.
+          Your privacy is important to me. Daily Echo Game does not collect or
+          store any personal data.
         </Text>
         {/* <Text>
           However, to support the app and keep it free, I use Google AdSense for

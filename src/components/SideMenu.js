@@ -33,7 +33,7 @@ const SideMenu = () => {
     {
       path: "/about",
       label: "About",
-      description: "Learn more about Echo",
+      description: "Learn more about Daily Echo Game",
     },
     {
       path: "/instructions",

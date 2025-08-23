@@ -8,7 +8,8 @@ const InstructionsPage = () => {
           How to Play
         </Text>
         <Text>
-          Echo is simple and fun! Here’s how you can play each daily puzzle:
+          Daily Echo Game is simple and fun! Here’s how you can play each daily
+          puzzle:
         </Text>
         <UnorderedList spacing={3} pl={5}>
           <ListItem>Use the clues provided to guess the secret word.</ListItem>

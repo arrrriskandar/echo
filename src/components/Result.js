@@ -1,4 +1,4 @@
-import { Text, VStack, Button, Box } from "@chakra-ui/react";
+import { Text, VStack, Button, Box, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const Result = ({
@@ -24,8 +24,9 @@ const Result = ({
   const hintLine = `💡 Hints used: ${hints}`;
   const streakLine = `🔥 Streak: ${streakCount}`;
   const [countdown, setCountdown] = useState("");
+  const toast = useToast();
 
-  const shareText = `Echo 
+  const shareText = `Daily Echo Game 
 ${emojiGuesses}
 ${hintLine}
 ${streakLine} 
@@ -34,9 +35,21 @@ Play daily at: www.dailyechogame.com`;
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(shareText);
-      alert("Result copied! Ready to share.");
+      toast({
+        title: "Result copied! Ready to share.",
+        status: "success",
+        duration: 3000,
+        position: "top",
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
-      alert("Failed to copy result.");
+      toast({
+        title: "Failed to copy result.",
+        status: "error",
+        duration: 3000,
+        position: "top",
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -96,9 +109,6 @@ Play daily at: www.dailyechogame.com`;
         </Button>
         <Text fontSize="sm" color="gray.400">
           ⏳ Next puzzle in: {countdown}
-        </Text>
-        <Text fontSize="xs" color="gray.500" mt={2} userSelect="text">
-          Play daily at: www.dailyechogame.com
         </Text>
       </VStack>
     </Box>

@@ -8,8 +8,8 @@ const SupportMe = () => {
           Support Me
         </Text>
         <Text>
-          If you enjoy using Echo and want to show some love, feel free to
-          support me!
+          If you enjoy using Daily Echo Game and want to show some love, feel
+          free to support me!
         </Text>
         <Link href="https://www.buymeacoffee.com/ariskandar" isExternal>
           <Image
