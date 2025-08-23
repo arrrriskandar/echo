@@ -139,7 +139,7 @@ const puzzleBank = [
   {
     date: "2025-08-23",
     answer: "campfire",
-    clues: ["fire", "camp", "smoke", "outdoor"],
+    clues: ["marshmallows", "smoke", "outdoor", "guitar"],
     hint1: "8 letters",
     hint2: "Fire at a campsite",
   },
