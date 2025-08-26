@@ -161,10 +161,10 @@ const puzzleBank = [
   },
   {
     date: "2025-08-26",
-    answer: "blueberry",
-    clues: ["fruit", "blue", "berry", "sweet"],
-    hint1: "9 letters",
-    hint2: "Small blue fruit",
+    answer: "chess",
+    clues: ["game", "board", "strategy", "knight"],
+    hint1: "5 letters",
+    hint2: "Black and white board game",
   },
   {
     date: "2025-08-27",
@@ -220,10 +220,10 @@ const puzzleBank = [
   },
   {
     date: "2025-09-03",
-    answer: "labyrinth",
-    clues: ["maze", "paths", "confuse", "myth"],
-    hint1: "9 letters",
-    hint2: "A complicated maze",
+    answer: "volcano",
+    clues: ["eruption", "crater", "ash", "mountain"],
+    hint1: "7 letters",
+    hint2: "Spews lava",
   },
   {
     date: "2025-09-04",
