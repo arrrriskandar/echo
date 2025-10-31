@@ -9,7 +9,7 @@ const AboutPage = () => {
           About
         </Heading>
         <Text>
-          Daily Word Echo is a quick and engaging daily word association game.
+          Daily Echo Game is a quick and engaging daily word association game.
           Each day you’ll face a new challenge: uncover the secret word using
           carefully chosen one-word clues. It’s simple to pick up, but tricky
           enough to keep your mind sharp.
@@ -22,7 +22,7 @@ const AboutPage = () => {
           right amount of challenging.
         </Text>
         <Text>
-          Daily Word Echo was built out of a love for puzzles and wordplay. My
+          Daily Echo Game was built out of a love for puzzles and wordplay. My
           goal is to create a fun daily ritual — something small that brings a
           spark of curiosity and accomplishment to your day. I hope you enjoy
           playing as much as I enjoyed creating it!
